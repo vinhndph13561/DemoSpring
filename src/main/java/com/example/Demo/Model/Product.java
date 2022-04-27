@@ -3,7 +3,7 @@ package com.example.Demo.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Product")
+@Table(name="product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,37 +15,22 @@ public class Product {
     private Double price;
     private String color;
     private String size;
-    private Long categoryId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cateId", referencedColumnName = "cateId")
+    private Category category;
 
-    public Product() {
-    }
-    public Product( String productName, int quantity, String image,
-                   Double price, String color, String size, Long categoryId) {
+    public Product( String productName, int quantity, String image, Double price, String color, String size, Category category) {
         this.productName = productName;
         this.quantity = quantity;
         this.image = image;
         this.price = price;
         this.color = color;
         this.size = size;
-        this.categoryId = categoryId;
+        this.category = category;
     }
 
-    public String getColor() {
-        return color;
+    public Product() {
     }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
 
     public Long getProductId() {
         return productId;
@@ -87,12 +72,28 @@ public class Product {
         this.price = price;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public String getColor() {
+        return color;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -105,7 +106,7 @@ public class Product {
                 ", price=" + price +
                 ", color='" + color + '\'' +
                 ", size='" + size + '\'' +
-                ", categoryId=" + categoryId +
+                ", category=" + category +
                 '}';
     }
 }
