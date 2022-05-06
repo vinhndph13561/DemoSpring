@@ -1,25 +1,36 @@
 package com.example.Demo.Model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name="product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="productId",nullable = false)
     private Long productId;
+
     @Column(unique = true,nullable = false,length = 255)
     private String productName;
+    @Column(name="quantity",nullable = false)
     private int quantity;
+    @Column(name="image",nullable = false)
     private String image;
+    @Column(name="price",nullable = false)
     private Double price;
+    @Column(name="color",nullable = false)
     private String color;
+    @Column(name="size",nullable = false)
     private String size;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cateId", referencedColumnName = "cateId")
     private Category category;
 
-    public Product( String productName, int quantity, String image, Double price, String color, String size, Category category) {
+    public Product(String productName, int quantity, String image, Double price, String color, String size, Category category) {
         this.productName = productName;
         this.quantity = quantity;
         this.image = image;

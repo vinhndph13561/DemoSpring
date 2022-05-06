@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface CategoryService {
     List<Category> getAllCategories();
-    ResponseEntity<ResponseObject> getCategoryById(Long id);
-    ResponseEntity<ResponseObject> removeCategoryById(Long id);
-    ResponseEntity<ResponseObject> updateCategoryById(Category newCategory, Long id);
+    ResponseEntity<ResponseObject> getCategoryById(int id);
+    ResponseEntity<ResponseObject> removeCategoryById(int id);
+    ResponseEntity<ResponseObject> updateCategoryById(Category newCategory, int id);
     ResponseEntity<ResponseObject> saveCategory(Category newCategory);
 }

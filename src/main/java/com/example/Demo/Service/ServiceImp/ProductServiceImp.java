@@ -39,8 +39,8 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public ResponseEntity<ResponseObject> getProductByProductName(String proName) {
-        List<Product> foundProduct = productRepository.findByProductName(proName);
-        if (foundProduct.size()>0){
+        Product foundProduct = productRepository.findByProductName(proName);
+        if (foundProduct!=null){
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("oke","successfully",foundProduct)
             );
@@ -85,12 +85,12 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public ResponseEntity<ResponseObject> saveProduct(Product newProduct) {
-        List<Product> foundProduct = productRepository.findByProductName(newProduct.getProductName().trim());
-        if (foundProduct.size()>0){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed","Email already used","")
-            );
-        }
+        Product foundProduct = productRepository.findByProductName(newProduct.getProductName());
+//        if (foundProduct!=null){
+//            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+//                    new ResponseObject("failed","Product name already used","")
+//            );
+//        }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok","success",productRepository.save(newProduct))
         );

@@ -12,5 +12,5 @@ public interface UserService {
     ResponseEntity<ResponseObject> getUserByEmail(String email);
     ResponseEntity<ResponseObject> removeUserById(int id);
     ResponseEntity<ResponseObject> updateUserById(User newUser, int id);
-    ResponseEntity<ResponseObject> saveUser(User newUser);
+    ResponseEntity<ResponseObject> saveUser(User newUser, int roleId);
 }

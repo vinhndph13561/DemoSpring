@@ -1,6 +1,12 @@
 package com.example.Demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,13 +23,19 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    List<UserRole> listUserRole;
+
+    public User(){
+
+    }
+    public User(String email, String password, List<UserRole> listUserRole) {
+        this.email = email;
+        this.password = password;
+        this.listUserRole = listUserRole;
+    }
 
     public int getId() {
         return id;
@@ -49,11 +61,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public List<UserRole> getListUserRole() {
+        return listUserRole;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setListUserRole(List<UserRole> listUserRole) {
+        this.listUserRole = listUserRole;
     }
 }

@@ -34,21 +34,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/api/controller/categories/insert").permitAll()
+////                .antMatchers("/api/controller/products/**").hasAnyRole("MEMBER", "ADMIN")
+////                .antMatchers("/api/controller/categories/**").hasAnyRole("MEMBER", "ADMIN")
+////                .antMatchers("/api/controller/users/**").hasAnyRole("MEMBER", "ADMIN")
+////                .antMatchers("/api/controller/admin").hasRole("ADMIN")
+//                .anyRequest().authenticated();
+//                .and().exceptionHandling().accessDeniedPage("/403")
+//                .and()
+//                .formLogin() // Cho phép người dùng xác thực bằng form login
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                .defaultSuccessUrl("/success/")
+//                .permitAll() // Tất cả đều được truy cập vào địa chỉ này
+//                .and()
+//                .logout() // Cho phép logout
+//                .permitAll();
+        http.formLogin() // Cho phép người dùng xác thực bằng form login
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/success")
+                .permitAll() // Tất cả đều được truy cập vào địa chỉ này
+                .and()
+                .logout() // Cho phép logout
+                .permitAll();
         http
-                .authorizeRequests()
-                .antMatchers("/api/controller/users/register").permitAll()
-                .antMatchers("/api/controller/users").hasRole("MEMBER")
-                .antMatchers("/api/controller/users/admin").hasRole("ADMIN")
+                .authorizeRequests().antMatchers("/api/controller/users/insert/*").permitAll()
+                .antMatchers("/api/controller/products/**").hasRole("ADMIN")
+                .antMatchers("/api/controller/categories/**").hasRole("ADMIN")
+                .antMatchers("/api/controller/products/find/*").hasRole("MEMBER")
+                .antMatchers("/api/controller/categories/find/*").hasRole("MEMBER")
+                .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login?error")
-//                .and()
-//                .exceptionHandling()
-//                .accessDeniedPage("/403");
+
+
     }
 
 

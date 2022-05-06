@@ -18,18 +18,18 @@ public class ProductController {
     @Autowired
     private ProductServiceImp productServiceImp;
 
-    @GetMapping("")
+    @GetMapping("/find/")
     List<Product> getAllProducts(){
         return productServiceImp.getAllProduct();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     ResponseEntity<ResponseObject> findById(@PathVariable Long id){
         return productServiceImp.getProductById(id);
     }
 
-    @GetMapping("/{proName}")
-    ResponseEntity<ResponseObject> findById(@PathVariable String proName){
+    @GetMapping("/proname/{proName}")
+    ResponseEntity<ResponseObject> findByProductName(@PathVariable String proName){
         return productServiceImp.getProductByProductName(proName);
     }
 

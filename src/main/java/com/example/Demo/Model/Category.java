@@ -1,26 +1,40 @@
 package com.example.Demo.Model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name="category")
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long cateId;
-    private String cateName;
-    public  Category(){}
+    @Column(name = "cateId", nullable = false)
+    private int cateId;
 
-    public Category( String cateName) {
+    private String cateName;
+    public  Category(int i, String watch){}
+
+    public Category(String cateName) {
         this.cateName = cateName;
 
     }
 
-    public Long getCateId() {
+    public Category(int i) {
+        this.cateId= cateId;
+    }
+
+    public Category() {
+
+    }
+
+    public int getCateId() {
         return cateId;
     }
 
-    public void setCateId(Long cateId) {
+    public void setCateId(int cateId) {
         this.cateId = cateId;
     }
 

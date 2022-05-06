@@ -23,7 +23,7 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public ResponseEntity<ResponseObject> getCategoryById(Long id) {
+    public ResponseEntity<ResponseObject> getCategoryById(int id) {
         Optional<Category> foundCate = cateRepository.findById(id);
         if (foundCate.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -37,9 +37,9 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public ResponseEntity<ResponseObject> removeCategoryById(Long id) {
+    public ResponseEntity<ResponseObject> removeCategoryById(int id) {
         boolean exist = cateRepository.existsById(id);
-        if (!exist){
+        if (exist){
             cateRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok","success","")
@@ -51,7 +51,7 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public ResponseEntity<ResponseObject> updateCategoryById(Category newCategory, Long id) {
+    public ResponseEntity<ResponseObject> updateCategoryById(Category newCategory, int id) {
         Category updateCate = cateRepository.findById(id).map(category ->{
             category.setCateName(newCategory.getCateName());
 
@@ -70,7 +70,7 @@ public class CategoryServiceImp implements CategoryService {
         List<Category> foundCate = cateRepository.findByCateName(newCategory.getCateName().trim());
         if (foundCate.size()>0){
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed","Email already used","")
+                    new ResponseObject("failed","Category name already used","")
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(

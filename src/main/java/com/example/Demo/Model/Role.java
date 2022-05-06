@@ -1,9 +1,18 @@
 package com.example.Demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="role")
 public class Role implements Serializable {
@@ -17,11 +26,9 @@ public class Role implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
-
-    public Role() {
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "role")
+    List<UserRole> listUserRole;
 
     public Role(String name) {
         this.name = name;
@@ -43,11 +50,11 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public List<UserRole> getListUserRole() {
+        return listUserRole;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setListUserRole(List<UserRole> listUserRole) {
+        this.listUserRole = listUserRole;
     }
 }
