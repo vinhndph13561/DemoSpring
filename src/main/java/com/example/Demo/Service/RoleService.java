@@ -9,5 +9,5 @@ import java.util.List;
 public interface RoleService {
     ResponseEntity<ResponseObject> findRoleById(int roleId);
 
-    List<String> getRoleNames(int userId);
+
 }

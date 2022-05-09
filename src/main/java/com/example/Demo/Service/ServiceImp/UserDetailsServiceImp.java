@@ -5,8 +5,7 @@ import com.example.Demo.Model.User;
 import com.example.Demo.Model.UserRole;
 import com.example.Demo.Repositories.RoleRepository;
 import com.example.Demo.Repositories.UserRepository;
-import com.example.Demo.Service.RoleService;
-import com.example.Demo.Service.UserService;
+import com.example.Demo.Repositories.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,9 +22,11 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserRoleRepository userRoleRepository;
     // Thong tin role service
     @Autowired
-    private RoleService roleService;
+    private RoleRepository roleRepository;
 
     @Override
     @Transactional
@@ -54,10 +55,19 @@ public class UserDetailsServiceImp implements UserDetailsService {
             System.out.println("Password: " + appUser.getPassword());
         }
 
-        List<String> roleNames = this.roleService.getRoleNames(appUser.getId());
+        List<UserRole> ur = appUser.getListUserRole();
+        List<String> roleNames = new ArrayList<>();
+        for(UserRole userRole: ur){
+            Optional<Role> rolee=roleRepository.findById(userRole.getRole().getId());
+            if (rolee.isPresent()) {
+                roleNames.add(rolee.get().getName());
+            }else{
+                
+            }
+        }
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        if(roleNames!=null) {
+        if(roleNames.size()>0) {
             for(String role: roleNames) {
                 System.out.println(role);
                 GrantedAuthority authority = new SimpleGrantedAuthority(role);
