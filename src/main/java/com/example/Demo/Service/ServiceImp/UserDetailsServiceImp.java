@@ -62,7 +62,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
             if (rolee.isPresent()) {
                 roleNames.add(rolee.get().getName());
             }else{
-                
+                System.out.println("Role not found! ");
             }
         }
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
