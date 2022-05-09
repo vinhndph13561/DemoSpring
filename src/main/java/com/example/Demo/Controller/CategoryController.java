@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.security.Principal;
 
 @RestController
 @RequestMapping(path = "/api/controller/categories")
@@ -35,7 +35,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateCate(@RequestBody Category newCate,@PathVariable int id){
+    ResponseEntity<ResponseObject> updateCate(@RequestBody Category newCate,@PathVariable int id ){
         return categoryServiceImp.updateCategoryById(newCate,id);
     }
 
